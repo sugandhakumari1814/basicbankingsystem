@@ -7,12 +7,6 @@ $(document).ready(function(){
             $('.navbar').removeClass("sticky");
         }
     });
-    // toggle menu/navbar script
-    $('.menu-btn').click(function(){
-        $('.navbar .menu').toggleClass("active");
-        $('.menu-btn i').toggleClass("active");
-
-    });
 });
 var indexValue = 1;
 showImg(indexValue);
@@ -42,8 +36,12 @@ function sendMoney() {
     var enterName = document.getElementById("enterName").value;
     var enterAmount = parseInt(document.getElementById("enterAmount").value);
 
-    if (enterAmount > 7000) {
+  if (enterAmount > 100000) {
         alert("Insufficient Balance.")
+    } else if (enterAmount == 0) {
+        alert("Zero amount can't be transferred!! Please enter some valid amount");
+    } else if (enterAmount < 0) {
+        alert("Negative transaction is not supported..Enter some valid amount!!");
     } else {
         var findUserBankAccount = enterName + "BankBalance";
         var finalAmount = parseInt(document.getElementById(findUserBankAccount).innerHTML) + enterAmount;
