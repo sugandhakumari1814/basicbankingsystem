@@ -7,6 +7,12 @@ $(document).ready(function(){
             $('.navbar').removeClass("sticky");
         }
     });
+    // toggle menu/navbar script
+    $('.menu-btn').click(function(){
+        $('.navbar .menu').toggleClass("active");
+        $('.menu-btn i').toggleClass("active");
+
+    });
 });
 var indexValue = 1;
 showImg(indexValue);
@@ -33,27 +39,29 @@ function showImg(e){
 let myAccountBalance = parseInt(document.getElementById("myAccountBalance").innerText);
 
 function sendMoney() {
+    var senderName = document.getElementById("enterSenderName").value;
     var enterName = document.getElementById("enterName").value;
     var enterAmount = parseInt(document.getElementById("enterAmount").value);
 
-  if (enterAmount > 100000) {
-        alert("Insufficient Balance.")
-    } else if (enterAmount == 0) {
-        alert("Zero amount can't be transferred!! Please enter some valid amount");
-    } else if (enterAmount < 0) {
-        alert("Negative transaction is not supported..Enter some valid amount!!");
+    var temp = senderName + "BankBalance";
+    var sender = parseInt(document.getElementById(temp).innerText);
+    var myAccountBalance = parseInt(document.getElementById("myAccountBalance").innerText);
+
+    if (enterAmount > sender) {
+        alert("Insufficient balance")
     } else {
-        var findUserBankAccount = enterName + "BankBalance";
-        var finalAmount = parseInt(document.getElementById(findUserBankAccount).innerHTML) + enterAmount;
-        var myAccountBalance = parseInt(document.getElementById("myAccountBalance").innerText) - enterAmount;
-        document.getElementById("myAccountBalance").innerText = myAccountBalance
-        document.getElementById(findUserBankAccount).innerHTML = finalAmount;
+        var findRecieverBankAccount = enterName + "BankBalance";
+        var findSenderAccount = senderName + "BankBalance";
+        var recieverFinalAmount = parseInt(document.getElementById(findRecieverBankAccount).innerHTML) + enterAmount;
+        var senderFinalAmount = parseInt(document.getElementById(findSenderAccount).innerText) - enterAmount;
+        document.getElementById(findSenderAccount).innerText = senderFinalAmount
+        document.getElementById(findRecieverBankAccount).innerHTML = recieverFinalAmount;
         alert(`Successful Transaction !!  
-      Rs.${enterAmount} is sent to ${enterName}@gmail.com.`)
+      $${enterAmount} is sent to ${enterName}@gmail.com.`)
 
         // transaction history 
         var createPTag = document.createElement("li");
-        var textNode = document.createTextNode(`Rs.${enterAmount} is sent to recepient with Email-id ${enterName}@gmail.com on ${Date()}.`);
+        var textNode = document.createTextNode(`$${enterAmount} is sent to recepient with Email-id ${enterName}@gmail.com from ${senderName}@gmail.com on ${Date()}.`);
         createPTag.appendChild(textNode);
         var element = document.getElementById("transaction-history-body");
         element.insertBefore(createPTag, element.firstChild);
